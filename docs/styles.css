@@ -1,0 +1,225 @@
+/* Impulse — sistema de diseño
+   Paleta: tinta profunda + acento cinético. Los números (Score, montos,
+   cantidades) usan una tabular/monospace deliberada: esta es una app de
+   seguimiento personal, y tratar los números como dato "medible" (no como
+   texto decorativo) es la idea central del diseño. */
+:root {
+  --ink: #0E0F13;
+  --surface: #16181F;
+  --surface-2: #1E212B;
+  --surface-3: #272B37;
+  --border: #2B2F3B;
+  --text: #F2F1EC;
+  --text-dim: #9296A3;
+  --text-faint: #5C606D;
+  --accent: #FF5A36;
+  --accent-dim: #7A2F1E;
+  --positive: #3DDC97;
+  --negative: #FF6B6B;
+  --area-ejercicio: #FF5A36;
+  --area-alimentacion: #3DDC97;
+  --area-finanzas: #4C8DFF;
+  --area-vicios: #B14CFF;
+  --area-objetivos: #FFC13D;
+  --radius-s: 10px;
+  --radius-m: 16px;
+  --radius-l: 22px;
+  --font-num: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+button, input, textarea, select { font-family: inherit; color: inherit; }
+button { cursor: pointer; }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 18px 10px;
+}
+.topbar .greeting { font-size: 15px; color: var(--text-dim); }
+.topbar .title { font-size: 22px; font-weight: 650; letter-spacing: -0.01em; margin-top: 2px; }
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--surface-2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text);
+}
+.icon { display: inline-flex; width: 20px; height: 20px; }
+.icon svg { width: 100%; height: 100%; }
+
+/* ---------- Screen container ---------- */
+.screen { flex: 1; padding: 4px 16px 96px; overflow-y: auto; }
+.screen-header { display: flex; align-items: center; gap: 10px; padding: 14px 2px 18px; }
+.screen-header .title { font-size: 20px; font-weight: 650; }
+.screen-header .back { color: var(--text-dim); }
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-m); padding: 16px; margin-bottom: 12px;
+}
+.card-title { font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+
+/* ---------- Score ring ---------- */
+.score-hero { display: flex; align-items: center; gap: 18px; }
+.score-ring { width: 84px; height: 84px; flex-shrink: 0; }
+.score-value { font-size: 26px; font-weight: 700; }
+.score-breakdown { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.score-bar-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.score-bar-row .label { width: 108px; color: var(--text-dim); flex-shrink: 0; }
+.score-bar-track { flex: 1; height: 6px; border-radius: 4px; background: var(--surface-3); overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 4px; }
+.score-bar-row .val { width: 28px; text-align: right; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  border: none; border-radius: var(--radius-s); padding: 11px 16px;
+  font-size: 14.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-primary { background: var(--accent); color: #1A0E09; }
+.btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost { background: transparent; color: var(--text-dim); }
+.btn-block { width: 100%; justify-content: center; }
+.btn-danger { background: rgba(255,107,107,0.14); color: var(--negative); }
+.btn-sm { padding: 7px 11px; font-size: 13px; border-radius: 8px; }
+
+/* ---------- Lists / items ---------- */
+.list-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.list-item:last-child { border-bottom: none; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.item-main { flex: 1; min-width: 0; }
+.item-title { font-size: 14.5px; font-weight: 550; }
+.item-sub { font-size: 12.5px; color: var(--text-faint); margin-top: 2px; }
+.item-value { font-size: 14.5px; font-weight: 600; }
+
+/* ---------- Area pill ---------- */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px;
+  border-radius: 999px; background: var(--surface-2); font-size: 12.5px; color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+/* ---------- Quick actions grid ---------- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quick-tile {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m);
+  padding: 14px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start;
+}
+.quick-tile .icon { color: var(--accent); }
+
+/* ---------- Bottom nav ---------- */
+.tabbar {
+  position: sticky; bottom: 0; left: 0; right: 0;
+  background: rgba(22,24,31,0.92); backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  display: flex; padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  color: var(--text-faint); font-size: 10.5px; padding: 4px 0; border: none; background: none;
+}
+.tab.active { color: var(--accent); }
+.tab .icon { width: 21px; height: 21px; }
+
+/* ---------- FAB (registro rápido universal) ---------- */
+.fab {
+  position: fixed; bottom: 78px; left: 50%; transform: translateX(-50%);
+  width: 56px; height: 56px; border-radius: 50%; background: var(--accent);
+  color: #1A0E09; display: flex; align-items: center; justify-content: center;
+  border: none; box-shadow: 0 8px 24px rgba(255,90,54,0.35); z-index: 20;
+}
+.fab .icon { width: 26px; height: 26px; }
+
+/* ---------- Sheet / modal ---------- */
+.sheet-backdrop {
+  position: fixed; inset: 0; background: rgba(6,7,9,0.6); z-index: 40;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.sheet {
+  width: 100%; max-width: 480px; background: var(--surface); border-radius: 22px 22px 0 0;
+  padding: 18px 18px calc(20px + env(safe-area-inset-bottom)); max-height: 86vh; overflow-y: auto;
+  border-top: 1px solid var(--border);
+}
+.sheet-handle { width: 36px; height: 4px; border-radius: 3px; background: var(--border); margin: 0 auto 14px; }
+.sheet-title { font-size: 17px; font-weight: 650; margin-bottom: 14px; }
+
+/* ---------- Forms ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.field label { font-size: 12.5px; color: var(--text-dim); }
+.field input, .field select, .field textarea {
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 11px 12px; font-size: 14.5px;
+}
+.field textarea { resize: vertical; min-height: 60px; }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg-btn {
+  padding: 8px 13px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border);
+  font-size: 13px; color: var(--text-dim);
+}
+.seg-btn.active { background: var(--accent); color: #1A0E09; border-color: var(--accent); }
+
+/* ---------- Empty state ---------- */
+.empty { text-align: center; padding: 34px 10px; color: var(--text-faint); }
+.empty .icon { width: 30px; height: 30px; margin: 0 auto 10px; color: var(--text-faint); }
+.empty p { font-size: 13.5px; max-width: 240px; margin: 0 auto; }
+
+/* ---------- Chat ---------- */
+.chat-scroll { display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; }
+.bubble { max-width: 82%; padding: 11px 14px; border-radius: 16px; font-size: 14px; line-height: 1.42; }
+.bubble.user { align-self: flex-end; background: var(--accent); color: #1A0E09; border-bottom-right-radius: 4px; }
+.bubble.assistant { align-self: flex-start; background: var(--surface-2); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.chat-input-bar {
+  position: sticky; bottom: 0; display: flex; gap: 8px; padding: 10px 0;
+  background: linear-gradient(to top, var(--ink) 60%, transparent);
+}
+.chat-input-bar input {
+  flex: 1; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px;
+  padding: 12px 16px; font-size: 14.5px;
+}
+.chat-input-bar button {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--accent); border: none;
+  display: flex; align-items: center; justify-content: center; color: #1A0E09; flex-shrink: 0;
+}
+.suggestion-chip { font-size: 12.5px; color: var(--text-dim); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; }
+
+/* ---------- misc ---------- */
+.section-title { font-size: 13px; color: var(--text-dim); margin: 18px 2px 10px; text-transform: none; }
+.toast {
+  position: fixed; bottom: 148px; left: 50%; transform: translateX(-50%);
+  background: var(--surface-3); color: var(--text); padding: 10px 16px; border-radius: 999px;
+  font-size: 13px; z-index: 60; border: 1px solid var(--border); max-width: 88%; text-align: center;
+}
+.switch { position: relative; width: 42px; height: 24px; border-radius: 999px; background: var(--surface-3); border: 1px solid var(--border); flex-shrink: 0; }
+.switch.on { background: var(--accent); border-color: var(--accent); }
+.switch .knob { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.switch.on .knob { transform: translateX(18px); }
+.link { color: var(--text-dim); font-size: 13px; text-decoration: underline; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--surface-3); color: var(--text-dim); }
+.badge.premium { background: rgba(255,193,61,0.15); color: var(--area-objetivos); }
+
+::-webkit-scrollbar { width: 0; height: 0; }
